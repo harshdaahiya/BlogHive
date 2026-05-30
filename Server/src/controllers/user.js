@@ -233,19 +233,25 @@ const refreshAccessToken = asyncHandler(async (req, res, next) => {
 
 const editUserProfile = asyncHandler(async (req, res) => {
     const { aboutText } = req.body;
-    // console.log(req.user)
     const userId = req.user._id;
 
-    if (!aboutText) {
-        throw new ApiError(400, "About section cannot be empty");
+    const updateFields = {};
+    if (aboutText) {
+        updateFields.about = aboutText;
+    }
+
+    if (req.file) {
+        const avatar = await uploadOnCloudinary(req.file.buffer, req.file.mimetype);
+        if (avatar) {
+            updateFields.profileImageURL = avatar.secure_url;
+        }
     }
 
     const updatedUser = await User.findByIdAndUpdate(
         userId,
-        { about: aboutText },
+        updateFields,
         { new: true, runValidators: true }
-    ).select("about")
-    // console.log(updatedUser)
+    ).select("-password");
 
     if (!updatedUser) {
         throw new ApiError(500, "Error occurred while updating, please retry");

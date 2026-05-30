@@ -7,7 +7,8 @@ import {
     saveBlogInTheUserProfile,
     getAllSavedBlogsByUserId,
     getAllBlogs,
-    removeSavedBlogByTheUser
+    removeSavedBlogByTheUser,
+    handleUpdateBlogById
 } from "../controllers/blog.js";
 import { upload } from "../middlewares/multer.middleware.js"
 import { verifyUserJwtToken } from "../middlewares/auth.middleware.js"
@@ -18,6 +19,7 @@ router.use(verifyUserJwtToken)
 router.get("/:id", getBlogById);
 router.post("/getAllBlogs", getAllBlogs)
 router.post("/", upload.single("coverImage"), handleAddNewBlog);
+router.put("/:id", upload.single("coverImage"), handleUpdateBlogById);
 router.get("/", getAllBlogsByUserId)
 router.delete("/:blogId", handleDeleteBlogById)
 router.post("/saveBlog/:blogId", saveBlogInTheUserProfile )

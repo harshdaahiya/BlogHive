@@ -250,6 +250,47 @@ const getAllBlogs = asyncHandler(async (req, res) => {
 })
 
 
+const handleUpdateBlogById = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+    const { title, body } = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        throw new ApiError(400, "Invalid blog ID");
+    }
+
+    const blog = await Blog.findById(id);
+    if (!blog) {
+        throw new ApiError(404, "Blog not found");
+    }
+
+    if (blog.createdBy.toString() !== req.user._id.toString()) {
+        throw new ApiError(403, "Unauthorized to edit this blog");
+    }
+
+    if (title) blog.title = title;
+    if (body) blog.body = body;
+
+    if (req.file) {
+        const coverImage = await uploadOnCloudinary(req.file.buffer, req.file.mimetype);
+        if (coverImage) {
+            if (blog.coverImagePublicId) {
+                await deleteFromCloudinary(blog.coverImagePublicId);
+            }
+            blog.coverImage = coverImage.secure_url;
+            blog.coverImagePublicId = coverImage.public_id;
+        }
+    }
+
+    await blog.save();
+
+    const updatedBlog = await Blog.findById(id).populate("createdBy", "profileImageURL fullName email username");
+
+    return res.status(200).json(
+        new ApiResponse(200, { newBlog: updatedBlog }, "Blog updated successfully")
+    );
+});
+
+
 export {
     getBlogById,
     handleAddNewBlog,
@@ -258,5 +299,6 @@ export {
     saveBlogInTheUserProfile,
     getAllSavedBlogsByUserId,
     getAllBlogs,
-    removeSavedBlogByTheUser
+    removeSavedBlogByTheUser,
+    handleUpdateBlogById
 }

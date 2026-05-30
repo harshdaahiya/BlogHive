@@ -20,7 +20,7 @@ userRoute.post("/signup", upload.single("avatar"), registerUser)
 userRoute.get("/profile", verifyUserJwtToken,  getCurrentUser)
 userRoute.get("/checkAuth", verifyUserJwtToken, checkAuth )
 userRoute.post("/refresh-token", refreshAccessToken)
-userRoute.post("/edit-user-profile", verifyUserJwtToken, editUserProfile)
+userRoute.post("/edit-user-profile", verifyUserJwtToken, upload.single("avatar"), editUserProfile)
 
 
 export default userRoute
