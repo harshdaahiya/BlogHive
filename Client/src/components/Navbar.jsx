@@ -53,8 +53,8 @@ const Navbar = () => {
     { name: "Profile", icon: <FiUser />, path: `/${blogHiveUser}` },
     { name: "Library", icon: <FiBook />, path: "/library" },
     { name: "Notificatins", icon: <IoMdNotificationsOutline/>, path: "/notifications" },
-    { name: "Stories", icon: <TiDocumentText />, path: "" },
-    { name: "Stats", icon: <IoStatsChartOutline />, path: "" },
+    { name: "Stories", icon: <TiDocumentText />, path: "/stories" },
+    { name: "Stats", icon: <IoStatsChartOutline />, path: "/stats" },
     { name: "Logout", icon: <FiLogOut />, action: logoutUser },
   ];
 

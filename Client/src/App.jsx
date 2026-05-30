@@ -15,6 +15,8 @@ import LandingPage from "./pages/Landing";
 import Spinner from "./components/Spinner";
 import AdminRoute from "./context/AdminRoute";
 import AdminPage from "./pages/AdminPage";
+import Stories from "./pages/Stories";
+import Stats from "./pages/Stats";
 
 function App() {
   const { isAuthenticated, loading } = useAuth();
@@ -35,6 +37,8 @@ function App() {
               <Route index element={<ProtectedRoute><Home /></ProtectedRoute>} />
               <Route path="/notifications" element={<ProtectedRoute><Notification /></ProtectedRoute>} />
               <Route path="/library" element={<ProtectedRoute><Library /></ProtectedRoute>} />
+              <Route path="/stories" element={<ProtectedRoute><Stories /></ProtectedRoute>} />
+              <Route path="/stats" element={<ProtectedRoute><Stats /></ProtectedRoute>} />
               <Route path="/:username" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
               <Route path="/blog/:id" element={<ProtectedRoute><BlogDetails /></ProtectedRoute>} />
             </Route>

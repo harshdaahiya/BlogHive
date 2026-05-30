@@ -30,7 +30,7 @@ axiosInstance.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        console.log("🔹 Attempting to refresh access token...");
+        console.log(" Attempting to refresh access token...");
 
         const response = await axios.post(
           `${baseURL}/user/refresh-token`,
@@ -41,7 +41,7 @@ axiosInstance.interceptors.response.use(
         const newAccessToken = response.data.accessToken;
         localStorage.setItem("accessToken", newAccessToken);
 
-        console.log("✅ Access token refreshed!");
+        console.log("Access token refreshed!");
 
         // Retry all queued requests with the new token
         failedRequestsQueue.forEach(({ resolve }) => resolve(newAccessToken));
@@ -50,7 +50,7 @@ axiosInstance.interceptors.response.use(
         originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
         return axiosInstance(originalRequest);
       } catch (refreshError) {
-        console.log("❌ Refresh token failed, forcing logout...");
+        console.log("Refresh token failed, forcing logout...");
         failedRequestsQueue.forEach(({ reject }) => reject(refreshError));
         failedRequestsQueue = [];
         return Promise.reject(refreshError);
