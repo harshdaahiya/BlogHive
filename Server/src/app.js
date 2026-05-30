@@ -35,7 +35,7 @@ app.get("/", (req, res) => {
 });
 
 if (process.env.NODE_ENV === 'production') {
-    const url = 'https://bloghive-api.onrender.com/';
+    const url = 'https://bloghive-server-rkvw.onrender.com';
     keepAlive(url);
 }
 
