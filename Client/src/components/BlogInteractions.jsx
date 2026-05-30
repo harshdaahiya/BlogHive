@@ -21,7 +21,8 @@ const BlogInteractions = ({
     liked,
     setLiked,
     likeCount,
-    setLikeCount
+    setLikeCount,
+    currentBlog
 }) => {
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -102,6 +103,7 @@ const BlogInteractions = ({
                             isUserIsAuthor={isUserIsAuthor}
                             setIsDeleteConfirmationOpen={setIsDeleteConfirmationOpen}
                             setIsDropdownOpen={setIsDropdownOpen}
+                            currentBlog={currentBlog}
                         />
                     </div>
                 )}

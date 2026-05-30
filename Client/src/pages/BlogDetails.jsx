@@ -187,6 +187,7 @@ const BlogDetails = () => {
                         setLiked={setLiked}
                         likeCount={likeCount}
                         setLikeCount={setLikeCount}
+                        currentBlog={currentBlog}
                     />
 
                     {/* Cover Image */}
@@ -235,6 +236,7 @@ const BlogDetails = () => {
                         setLiked={setLiked}
                         likeCount={likeCount}
                         setLikeCount={setLikeCount}
+                        currentBlog={currentBlog}
                     />
 
                     <div className="py-2">

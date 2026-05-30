@@ -1,8 +1,18 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const BlogMoreActions = ({ isUserIsAuthor, setIsDeleteConfirmationOpen, setIsDropdownOpen }) => {
+const BlogMoreActions = ({ isUserIsAuthor, setIsDeleteConfirmationOpen, setIsDropdownOpen, currentBlog }) => {
+    const navigate = useNavigate();
+
     const authorActions = [
-        { name: "Edit Story", style: "text-gray-700 hover:bg-gray-100" },
+        { 
+            name: "Edit Story", 
+            style: "text-gray-700 hover:bg-gray-100",
+            onClick: () => {
+                navigate("/blog/upload", { state: { editBlog: currentBlog } });
+                setIsDropdownOpen(false);
+            }
+        },
         { name: "Story Settings", style: "text-gray-700 hover:bg-gray-100" },
         { name: "Story Stats", style: "text-gray-700 hover:bg-gray-100" },
         { name: "Hide Responses", style: "text-gray-700 hover:bg-gray-100" },
