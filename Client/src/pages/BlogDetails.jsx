@@ -25,6 +25,8 @@ const BlogDetails = () => {
     const [isUserIsAuthor, setisUserIsAuthor] = useState(false);
     const { id } = useParams();
     const [isSaved, setIsSaved] = useState(false);
+    const [liked, setLiked] = useState(false);
+    const [likeCount, setLikeCount] = useState(0);
     const navigate = useNavigate()
     const { setBlogs} = useUserProfileData();
 
@@ -43,13 +45,17 @@ const BlogDetails = () => {
         const fetchBlogById = async () => {
             setLoading(true);
             try {
-                const res = await axiosInstance.get(`/blog/${id}`);
-                if (!res) {
-                    console.log("Blog not found by ID");
-                }
+                const [res, likeRes, countRes] = await Promise.all([
+                    axiosInstance.get(`/blog/${id}`),
+                    axiosInstance.get(`/like/is-already-liked/${id}`),
+                    axiosInstance.get(`/like/get-total-likes/${id}`)
+                ]);
+                
                 setCurrentBlog(res.data.blog);
                 setComments(res.data.comments);
                 setisUserIsAuthor(res.data.isAuthor);
+                setLiked(likeRes.data.isLiked);
+                setLikeCount(countRes.data.likeCount);
                 setLoading(false);
             } catch (error) {
                 console.error(error || "Blog not found by ID");
@@ -177,6 +183,10 @@ const BlogDetails = () => {
                         handleRemoveSavedBlog={handleRemoveSavedBlog}
                         totalComments={comments.length}
                         scrollToComments={scrollToComments}
+                        liked={liked}
+                        setLiked={setLiked}
+                        likeCount={likeCount}
+                        setLikeCount={setLikeCount}
                     />
 
                     {/* Cover Image */}
@@ -221,6 +231,10 @@ const BlogDetails = () => {
                         handleDeleteBlog={handleDeleteBlog}
                         handleRemoveSavedBlog={handleRemoveSavedBlog}
                         totalComments={comments.length}
+                        liked={liked}
+                        setLiked={setLiked}
+                        likeCount={likeCount}
+                        setLikeCount={setLikeCount}
                     />
 
                     <div className="py-2">

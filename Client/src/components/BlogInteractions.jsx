@@ -17,7 +17,12 @@ const BlogInteractions = ({
     handleSaveBlog,
     handleDeleteBlog,
     handleRemoveSavedBlog,
-    scrollToComments }) => {
+    scrollToComments,
+    liked,
+    setLiked,
+    likeCount,
+    setLikeCount
+}) => {
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const blogMoreBTNRef = useRef();
@@ -38,7 +43,13 @@ const BlogInteractions = ({
             <div className="flex items-center gap-10">
 
                 <div className=" cursor-pointer flex items-center gap-1 text-gray-500 hover:text-gray-800 transition">
-                    <LikeButton blogId={blogId} />
+                    <LikeButton 
+                        blogId={blogId} 
+                        liked={liked}
+                        setLiked={setLiked}
+                        likeCount={likeCount}
+                        setLikeCount={setLikeCount}
+                    />
                 </div>
 
 
@@ -58,7 +69,7 @@ const BlogInteractions = ({
             {/* Right: Save, Share, More Options */}
             <div className=" relative flex items-center gap-6">
                 <button className=" cursor-pointer  text-gray-500 hover:text-gray-800 transition" onClick={() => isSaved ?
-                    handleRemoveSavedBlog(blogId, userId)
+                     handleRemoveSavedBlog(blogId, userId)
                     : handleSaveBlog(blogId, userId)}>
                     {isSaved ?
                         <FaBookmark className="w-5 h-5 text-gray-900" />
@@ -110,12 +121,3 @@ const BlogInteractions = ({
 };
 
 export default BlogInteractions;
-
-
-
-
-
-
-
-
-

@@ -1,23 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import axiosInstance from "../utils/axiosInstance";
 import { PiHandsClappingLight, PiHandsClappingBold } from "react-icons/pi";
 
-const LikeButton = ({ blogId }) => {
-    const [liked, setLiked] = useState(false);
-    const [likeCount, setLikeCount] = useState(0);
-
-    useEffect(() => {
-        // Fetching initial like status
-        axiosInstance.get(`/like/is-already-liked/${blogId}`).then((res) => {
-            setLiked(res.data.isLiked);
-        });
-
-        // Fetching total like count
-        axiosInstance.get(`/like/get-total-likes/${blogId}`).then((res) => {
-            setLikeCount(res.data.likeCount);
-        });
-    }, [blogId]);
-
+const LikeButton = ({ blogId, liked, setLiked, likeCount, setLikeCount }) => {
     const handleLike = async () => {
         try {
             if (liked) {
